@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import sys
+import matplotlib.pyplot as plt
 
 def get_table(states, actions):
 		table = np.zeros([len(states), len(actions)])
@@ -18,11 +19,11 @@ table = get_table(states, actions)
 
 def get_reward(action, state):
     if state == 'terminal':
-        return None, 'terminal'
+        return 0, 'terminal'
     elif state >= 10:
-        return None, 'terminal'
+        return 0, 'terminal'
     elif state < 0:
-        return None, 'terminal'
+        return 0, 'terminal'
     elif action == 0:
         return -1, state - 1
     elif action == 1:
@@ -55,7 +56,7 @@ for i in range(1000):
         
         reward, next_state = get_reward(action, current_state)
         current_rewards.append(reward)
-        if reward != None:
+        if reward != 0:
             current = table[current_state, action]
             update = gamma * table[current_state, np.argmax(table[current_state])]
             new_q = current + (alpha * (reward + update - current))
@@ -63,7 +64,6 @@ for i in range(1000):
 
             message += '{}'.format(render(current_state))
             print (message, end="\r", flush=True)
-            time.sleep(0.4)
 
             current_state = next_state
 
