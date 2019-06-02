@@ -63,6 +63,7 @@ for i in range(1000):
 
             message += '{}'.format(render(current_state))
             print (message, end="\r", flush=True)
+            time.sleep(0.4)
 
             current_state = next_state
 
